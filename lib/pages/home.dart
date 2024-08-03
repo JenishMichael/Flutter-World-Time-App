@@ -8,48 +8,64 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Map<String, String> data = {};
   @override
   Widget build(BuildContext context) {
-    // ModalRoute.of(context)? might return null value, so using null aware operator, -> used to get current scrn
-    //settings.arguments -> recieves data from agruments
-    //ModalRoute.of(context)?.settings.arguments returns a null object, so we cast it as Map<String, String>?
-    Map<String, String>? data =
-        ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
+    dynamic agrument = ModalRoute.of(context)?.settings.arguments;
+    if (agrument is Map<String, String> && data.isEmpty) {
+      //Is This condition right
+      data = agrument;
+    } else {
+      print("Date Passed from Loading is Not of Type <String,String>");
+    }
 
     return Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            TextButton.icon(
-              onPressed: () {},
-              label: const Text("Edit Location"),
-              icon: const Icon(Icons.edit),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              data?["flag"] ?? "ERROR In Flag",
-              style: const TextStyle(fontSize: 30),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              data?["location"] ?? "ERROR In location",
-              style: const TextStyle(fontSize: 40),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              data?["time"] ?? "ERROR In Time",
-              style: const TextStyle(fontSize: 50),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(50, 120, 50, 0),
+          child: Column(
+            children: [
+              ElevatedButton.icon(
+                onPressed: () async {
+                  dynamic result =
+                      await Navigator.pushNamed(context, "/location");
+                  print(result);
+
+                  if (result is Map<String, String>) {
+                    setState(() {
+                      data = result;
+                    });
+                  } else {
+                    print(
+                        "Date Recieved from location is Not of Type <String,String>");
+                    print(result.runtimeType);
+                  }
+                },
+                label: const Text("Choose Other Location"),
+                icon: const Icon(
+                  Icons.edit,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                data["location"] ?? "Initial Location Kolkata Not Found",
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                data["time"] ?? "Initial Kolkata's Time Not Found",
+                style: const TextStyle(
+                  fontSize: 25,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

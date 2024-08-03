@@ -38,6 +38,7 @@ class WorldTime {
 
       //Converting datetime to String and assigning it to time property
       time = DateFormat.jm().format(dateTime);
+      print("Fetched time: $time");
     } catch (e) {
       time = "Error";
       print("Error: $e");
