@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 
 class WorldTime {
   String url;
@@ -36,7 +37,7 @@ class WorldTime {
       }
 
       //Converting datetime to String and assigning it to time property
-      time = dateTime.toString();
+      time = DateFormat.jm().format(dateTime);
     } catch (e) {
       time = "Error";
       print("Error: $e");
