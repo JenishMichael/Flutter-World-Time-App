@@ -22,14 +22,17 @@ class _LoadingState extends State<Loading> {
 
   Future<void> setup() async {
     //Will wait for getTIme to complete and assign the time to time property
+
     await instance.getTime();
+    await Future.delayed(Duration(seconds: 3));
 
     //Now we pass the details to next scrn by adding map parameter
     Navigator.pushReplacementNamed(context, "/home",
         arguments: <String, String>{
           "location": instance.location,
           "time": instance.time ?? "ERROR TIME NOT FOUND",
-          "flag": instance.flag
+          "flag": instance.flag,
+          "isDayTime": (instance.isDayTime).toString(),
         });
   }
 

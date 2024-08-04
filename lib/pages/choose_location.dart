@@ -10,10 +10,13 @@ class ChooseLocation extends StatefulWidget {
 
 class _ChooseLocationState extends State<ChooseLocation> {
   List<WorldTime> locations = [
-    WorldTime(location: "London", url: "Europe/London", flag: "UK"),
-    WorldTime(location: "New York", url: "America/New_York", flag: "America"),
+    WorldTime(location: "London", url: "Europe/London", flag: "UK.png"),
     WorldTime(
-        location: "Los Angeles", url: "America/Los_Angeles", flag: "America")
+        location: "New York", url: "America/New_York", flag: "America.png"),
+    WorldTime(
+        location: "Los Angeles",
+        url: "America/Los_Angeles",
+        flag: "America.png"),
   ];
 
   @override
@@ -27,8 +30,10 @@ class _ChooseLocationState extends State<ChooseLocation> {
           itemBuilder: (context, index) {
             return Card(
               child: ListTile(
-                leading: const Icon(
-                  Icons.flag_circle,
+                leading: CircleAvatar(
+                  child: Image(
+                    image: AssetImage("assets/${locations[index].flag}"),
+                  ),
                 ),
                 title: Text(locations[index].location),
                 onTap: () async {

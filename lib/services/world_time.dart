@@ -8,6 +8,7 @@ class WorldTime {
   String flag;
   String location;
   String? time;
+  bool? isDayTime;
 
   //Named Parameter Constructor
   WorldTime({required this.location, required this.url, required this.flag});
@@ -35,7 +36,9 @@ class WorldTime {
         dateTime =
             dateTime.subtract(Duration(hours: offsetHr, minutes: offsetMin));
       }
-
+      print(dateTime);
+      isDayTime = dateTime.hour > 6 && dateTime.hour < 18 ? true : false;
+      print(isDayTime);
       //Converting datetime to String and assigning it to time property
       time = DateFormat.jm().format(dateTime);
       print("Fetched time: $time");
